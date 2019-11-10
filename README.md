@@ -1,10 +1,11 @@
-# echarts-for-wx-uniapp
-小程序的echarts，之后通过uni-app编译后使用     
-该项目是对[ecomfe/echarts-for-weixin](https://github.com/ecomfe/echarts-for-weixin)做了少量改动来兼容uni-app   
-如果你需要使用原生小程序开发方式，请移步[ecomfe/echarts-for-weixin](https://github.com/ecomfe/echarts-for-weixin)  
-
-## 在微信小程序中使用 ECharts
-本项目是 ECharts 的微信小程序版本，以及使用的示例。    
+## 简介  
+本项目是 ECharts 的微信小程序版本，以及使用的示例。  
+  
+该项目对[ecomfe/echarts-for-weixin](https://github.com/ecomfe/echarts-for-weixin)做了少量改动来兼容uni-app     
+  
+需要通过uni-app编译后使用     
+  
+如果你需要使用原生小程序开发方式，请移步[ecomfe/echarts-for-weixin](https://github.com/ecomfe/echarts-for-weixin)    
   
 开发者可以通过熟悉的 ECharts 配置方式，快速开发图表，满足各种可视化需求。    
 
@@ -12,13 +13,17 @@
 
 为了兼容小程序 Canvas，我们提供了一个小程序的组件，用这种方式可以方便地使用 ECharts。
 
-其中，`uni-ec-canvas` 是我们提供的组件，其他文件是如何使用该组件的示例。
-lazy-load为懒加载示例   
-multi-charts为一个页面中多个表格的示例  
+其中，`uni-ec-canvas` 是我们提供的组件，其他文件是如何使用该组件的示例。  
+
+lazy-load为懒加载示例    
+
+multi-charts为一个页面中多个表格的示例    
+
 其余示例请移步[官方示例](https://www.echartsjs.com/examples/zh/index.html)   
+
 然后将option替换即可  
 
-`uni-ec-canvas` 目录下有一个 `echarts.js`，默认是包含所有功能的echarts。如有可能，建议从[官网自定义构建](http://echarts.baidu.com/builder.html)来替换这个文件以减小文件大小。  
+`uni-ec-canvas` 目录下有一个 `echarts.js`，默认是包含所有功能的echarts。如有可以，建议从[官网自定义构建](http://echarts.baidu.com/builder.html)来替换这个文件以减小文件大小。  
 
 ## 使用  
 复制uni-ec-canvas至你公用的组件文件夹   
