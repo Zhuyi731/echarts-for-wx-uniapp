@@ -38,14 +38,15 @@ export default {
   },
   data () {
     return {
-      $curChart: {}
+      $curChart: {},
+      toHandleList: []
     }
   },
   watch: {
     'ec.option': {
       deep: true,
       handler (val, oldVal) {
-        this.$curChart.setOption(val)
+        this.setOption(val)
       }
     }
   },
@@ -97,15 +98,24 @@ export default {
               height: res.height
             })
           }
-          // delete chart._dom
+
           try {
             this.$curChart = chart
+            this.toHandleList.forEach(el => {
+              this.setOption(el)
+            })
           } catch (e) {
 
           }
         }).exec()
     },
-
+    setOption (val) {
+      if (!this.$curChart || !this.$curChart.setOption) {
+        this.toHandleList.push(val)
+      } else {
+        this.$curChart.setOption(val)
+      }
+    },
     canvasToTempFilePath (opt) {
       if (!opt.canvasId) {
         opt.canvasId = this.canvasId
@@ -159,6 +169,7 @@ export default {
         handler.processGesture(wrapTouch(e), 'end')
       }
     },
+
     initChart (canvas, width, height) {
       const chart = echarts.init(canvas, null, {
         width: width,
