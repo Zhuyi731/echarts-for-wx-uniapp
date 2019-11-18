@@ -127,6 +127,11 @@ export default {
     },
 
     touchStart (e) {
+      if (this.ec.stopTouchEvent) {
+        e.preventDefault()
+        e.stopPropagation()
+        return
+      }
       if (this.$curChart && e.touches.length > 0) {
         var touch = e.touches[0]
         var handler = this.$curChart.getZr().handler
@@ -143,6 +148,11 @@ export default {
     },
 
     touchMove (e) {
+      if (this.ec.stopTouchEvent) {
+        e.preventDefault()
+        e.stopPropagation()
+        return
+      }
       if (this.$curChart && e.touches.length > 0) {
         var touch = e.touches[0]
         var handler = this.$curChart.getZr().handler
@@ -155,6 +165,11 @@ export default {
     },
 
     touchEnd (e) {
+      if (this.ec.stopTouchEvent) {
+        e.preventDefault()
+        e.stopPropagation()
+        return
+      }
       if (this.$curChart) {
         const touch = e.changedTouches ? e.changedTouches[0] : {}
         var handler = this.$curChart.getZr().handler
