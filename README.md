@@ -125,3 +125,42 @@ ECharts 中的绝大部分功能都支持小程序版本，因此这里仅说明
 ## issue 
 
 如本项目有问题，欢迎在[issue](https://github.com/Zhuyi731/echarts-for-wx-uniapp/issues) 中向我们反馈，谢谢！
+
+## 常见问题及解决方案
+以图形分类
+
+### 所有图  
+1. 图表会覆盖弹窗，tab等页面组件上面  
+原因: 微信小程序中 canvas为原生组件，拥有最高优先级。  
+解决方案： 弹窗等需要覆盖图表的组件使用cover-view,cover-image来实现 详情请查看[小程序原生组件限制](https://developers.weixin.qq.com/miniprogram/dev/component/native-component.html#%E5%8E%9F%E7%94%9F%E7%BB%84%E4%BB%B6%E7%9A%84%E4%BD%BF%E7%94%A8%E9%99%90%E5%88%B6)  
+
+2. tooltip在手机上超出的部分不会显示   
+原因： echart自身问题  
+解决方案：需要通过判断点击的位置来动态设置tooltip的position  
+
+
+### 饼状图  
+1. 饼装图在安卓机下颜色中间会有颜色填充 如下图所示  
+![饼状图被填充](./docs/pie-center-filled.jpeg)   
+原因: echart自身bug，一直没有修复。当饼状图最后一个数据为0时，会已最后一个数据的颜色填充中间。    
+解决方案:  
+1.最后一个数据如果为0，强制设置为0.00001   
+2.添加一个假数据,颜色设置为中间的颜色，但是这个数据不显示。数据如下(中间填充白色)   
+``` json
+{ 
+    value: 0, 
+    name: '', 
+    itemStyle: { color: '#ffffff' },
+     label: { show: false }, 
+     emphasis: { label: { show: false } } 
+}
+```
+
+2. 饼状图禁用点击高亮(**hoverAnimation:false**)后标签和标签线虽然不显示了，但是高亮颜色还是会变化   
+如下图所示:图1未点击，图2点击过后   
+![点击之前](./docs/pie-not-click.jpeg)  
+![点击之后](./docs/pie-clicked.jpeg) 
+
+解决方案：  
+1.通过设置ec.stopTouchEvent来禁用点击事件，来放置用户点击    
+2.通过设置高亮颜色和不高亮颜色一致来使得看起来没有变化   
