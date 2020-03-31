@@ -100,8 +100,17 @@ export default{
 下载的文件放在 `uni-ec-canvas/echarts.js`，**注意一定需要重命名为 `echarts.js`**。
 
 ## 微信版本要求
-
 支持微信版本 >= 6.6.3，对应基础库版本 >= 1.9.91。尽可能使用更高版本的基础库版本。
+### Canvas 2d 版本要求
+最新版的 ECharts 微信小程序支持微信 Canvas 2d，当用户的基础库版本 >= 2.9.0 且没有设置 force-use-old-canvas="true" 的情况下，使用新的 Canvas 2d（默认）。
+
+使用新的 Canvas 2d 可以提升渲染性能，解决非同层渲染问题，强烈建议开启
+
+如果仍需使用旧版 Canvas，使用方法如下：
+```
+<ec-canvas id="xxx" canvas-id="xxx" ec="{{ ec }}" force-use-old-canvas="true"></ec-canvas>
+```
+
 
 调试的时候，需要在微信开发者工具中，将“详情”下的“调试基础库”设为 1.9.91 及以上版本。
 
