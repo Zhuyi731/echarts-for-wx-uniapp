@@ -1,17 +1,23 @@
 export default class WxCanvas {
-  constructor (ctx, canvasId) {
-    this.ctx = ctx
-    this.canvasId = canvasId
-    this.chart = null
+  constructor(ctx, canvasId, isNew, canvasNode) {
+    this.ctx = ctx;
+    this.canvasId = canvasId;
+    this.chart = null;
+    this.isNew = isNew
+    if (isNew) {
+      this.canvasNode = canvasNode;
+    } else {
+      this._initStyle(ctx);
+    }
 
     // this._initCanvas(zrender, ctx);
-    this._initStyle(ctx)
-    this._initEvent()
+
+    this._initEvent();
   }
 
-  getContext (contextType) {
+  getContext(contextType) {
     if (contextType === '2d') {
-      return this.ctx
+      return this.ctx;
     }
   }
 
@@ -19,58 +25,57 @@ export default class WxCanvas {
   //   if (!opt.canvasId) {
   //     opt.canvasId = this.canvasId;
   //   }
-
   //   return wx.canvasToTempFilePath(opt, this);
   // }
 
-  setChart (chart) {
-    this.chart = chart
+  setChart(chart) {
+    this.chart = chart;
   }
 
-  attachEvent () {
+  attachEvent() {
     // noop
   }
 
-  detachEvent () {
+  detachEvent() {
     // noop
   }
 
-  _initCanvas (zrender, ctx) {
+  _initCanvas(zrender, ctx) {
     zrender.util.getContext = function () {
-      return ctx
-    }
+      return ctx;
+    };
 
     zrender.util.$override('measureText', function (text, font) {
-      ctx.font = font || '12px sans-serif'
-      return ctx.measureText(text)
-    })
+      ctx.font = font || '12px sans-serif';
+      return ctx.measureText(text);
+    });
   }
 
-  _initStyle (ctx) {
+  _initStyle(ctx) {
     var styles = ['fillStyle', 'strokeStyle', 'globalAlpha',
       'textAlign', 'textBaseAlign', 'shadow', 'lineWidth',
-      'lineCap', 'lineJoin', 'lineDash', 'miterLimit', 'fontSize']
+      'lineCap', 'lineJoin', 'lineDash', 'miterLimit', 'fontSize'
+    ];
 
     styles.forEach(style => {
       Object.defineProperty(ctx, style, {
         set: value => {
-          if ((style !== 'fillStyle' && style !== 'strokeStyle') ||
-                (value !== 'none' && value !== null)
+          if (style !== 'fillStyle' && style !== 'strokeStyle' ||
+            value !== 'none' && value !== null
           ) {
-            ctx['set' + style.charAt(0).toUpperCase() + style.slice(1)](value)
+            ctx['set' + style.charAt(0).toUpperCase() + style.slice(1)](value);
           }
-        },
-        get: val => val
-      })
-    })
+        }
+      });
+    });
 
     ctx.createRadialGradient = () => {
-      return ctx.createCircularGradient(arguments)
-    }
+      return ctx.createCircularGradient(arguments);
+    };
   }
 
-  _initEvent () {
-    this.event = {}
+  _initEvent() {
+    this.event = {};
     const eventNames = [{
       wxName: 'touchStart',
       ecName: 'mousedown'
@@ -83,16 +88,34 @@ export default class WxCanvas {
     }, {
       wxName: 'touchEnd',
       ecName: 'click'
-    }]
+    }];
 
     eventNames.forEach(name => {
       this.event[name.wxName] = e => {
-        const touch = e.touches[0]
+        const touch = e.touches[0];
         this.chart.getZr().handler.dispatch(name.ecName, {
           zrX: name.wxName === 'tap' ? touch.clientX : touch.x,
           zrY: name.wxName === 'tap' ? touch.clientY : touch.y
-        })
-      }
-    })
+        });
+      };
+    });
+  }
+
+  set width(w) {
+    if (this.canvasNode) this.canvasNode.width = w
+  }
+  set height(h) {
+    if (this.canvasNode) this.canvasNode.height = h
+  }
+
+  get width() {
+    if (this.canvasNode)
+      return this.canvasNode.width
+    return 0
+  }
+  get height() {
+    if (this.canvasNode)
+      return this.canvasNode.height
+    return 0
   }
 }
