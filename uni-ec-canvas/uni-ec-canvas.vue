@@ -301,6 +301,7 @@
         });
         canvas.setChart(this.$curChart);
         this.$curChart.setOption(this.ec.option);
+        return this.$curChart
       }
     }
   };
