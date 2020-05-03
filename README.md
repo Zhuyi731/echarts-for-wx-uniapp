@@ -51,7 +51,7 @@ export default{
     data(){
         return {
             ec:{
-                options:{} //echart 配置项
+                option:{} //echart 配置项
             }
         }
     },
