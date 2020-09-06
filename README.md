@@ -38,6 +38,7 @@ multi-charts为一个页面中多个表格的示例
           ref="uni-ec-canvas"
           canvas-id="uni-ec-canvas"
           :ec="ec"
+          @inited="inited"
        ></uni-ec-canvas>
     </view>
 </template>
@@ -57,6 +58,12 @@ export default{
     },
     components:{
         uniEcCanvas
+    },
+    methods:{
+        inited(chart){
+           console.log('图表初始化完毕')
+           console.log('chart实例', chart)
+        }
     }
 }
 </script>
@@ -82,6 +89,11 @@ export default{
 ### 如何获取图表实例？
 
 在页面中使用 this.$refs['uni-ec-canvas'].$curChart即可获取chart实例
+注意：
+1. 使用 this.$refs['uni-ec-canvas'].$curChart获取需要等组件初始化完毕后才能获取到chart实例
+
+也可以通过监听组件的inited事件来获取实例
+
 
 ### 如何延迟加载图表？
 
