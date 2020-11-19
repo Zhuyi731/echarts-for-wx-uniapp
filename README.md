@@ -94,6 +94,18 @@ export default{
 
 也可以通过监听组件的inited事件来获取实例
 
+```html
+<uni-ec-canvas @inited="inited" />
+```
+
+```js
+export default {
+    methods: {
+           inited(curChart){
+                  console.log('这时候图表初始化完成了') 
+           }
+    }
+}
 
 ### 如何延迟加载图表？
 
