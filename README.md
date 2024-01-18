@@ -1,3 +1,8 @@
+## deprecated  
+本项目仅支持vue2且已经停止维护， 建议使用其他echart插件进行开发
+
+[uniapp echart插件](https://ext.dcloud.net.cn/plugin?id=4899)
+
 ## 简介  
 本项目是 ECharts 的微信小程序版本，以及使用的示例。  
   
